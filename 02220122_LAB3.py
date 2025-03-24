@@ -1,133 +1,89 @@
-#02220133- part 2 (task3 and task4).
+# 02220122 - Part 1(Task 1 and Task 2)
 
-### Task3.
-# Define the Node class
-class Node:
-    def __init__(self, data):
-        self.data = data  # Data field to store the element
-        self.next = None  # Reference to the next node
+#Task 1
+class ArrayStack:
+    def __init__(self, capacity=10):
+        # Private array to store elements
+        self._stack = [None] * capacity  # Initialize an array with given capacity
+        # Variable to track the top of the stack
+        self._top = -1  # Indicates stack is empty
+        print(f"Created new ArrayStack with capacity: {capacity}")
 
-# Define the LinkedStack class
-class LinkedStack:
-    def __init__(self):
-        self.top = None   # Reference to the top node (head of the linked list)
-        self.size = 0     # Counter to track the number of elements
-        print("Created new LinkedStack")
-
-    # Check if the stack is empty
     def is_empty(self):
-        return self.size == 0
+        # Check if the stack is empty
+        return self._top == -1
 
-    # Push operation
-    def push(self, value):
-        new_node = Node(value)  # Create a new node
-        new_node.next = self.top  # Link the new node to the current top
-        self.top = new_node  # Update the top to the new node
-        self.size += 1  # Increment the size counter
+# Create an instance of ArrayStack with default capacity 10
+stack = ArrayStack()
 
-    # Pop operation
-    def pop(self):
-        if self.is_empty():
-            print("Stack Underflow")
-            return None
-        popped_value = self.top.data  # Get the data from the top node
-        self.top = self.top.next  # Move top to the next node
-        self.size -= 1  # Decrement the size counter
-        return popped_value
-
-    # Peek operation
-    def peek(self):
-        if self.is_empty():
-            print("Stack is empty")
-            return None
-        return self.top.data
-
-# Example usage
-stack = LinkedStack()
-print("Stack is empty:", stack.is_empty())  # Output: True
+# Check if the stack is empty and print the result
+print("Stack is empty:", stack.is_empty())
 
 
-### Task 4.
-# Define the Node class
-class Node:
-    def __init__(self, data):
-        self.data = data  # Data field to store the element
-        self.next = None  # Reference to the next node
+#Task 2
+class ArrayStack:
+    def __init__(self, capacity=10):
+        # Private array to store elements
+        self._stack = [None] * capacity  # Initialize an array with given capacity
+        # Variable to track the top of the stack
+        self._top = -1  # Indicates stack is empty
+        self._capacity = capacity  # Store capacity for boundary check
+        print(f"Created new ArrayStack with capacity: {capacity}")
 
-# Define the LinkedStack class
-class LinkedStack:
-    def __init__(self):
-        self.top = None   # Reference to the top node
-        self.size_count = 0  # Counter to track the number of elements
-        print("Created new LinkedStack")
-
-    # Push operation
+    def is_empty(self):
+        # Check if the stack is empty
+        return self._top == -1
+    
     def push(self, element):
-        new_node = Node(element)  # Create a new node
-        new_node.next = self.top  # Link the new node to the current top
-        self.top = new_node       # Update the top to the new node
-        self.size_count += 1      # Increment the size counter
+        # 1. Push operation - Add an element to the top of the stack
+        if self._top + 1 == self._capacity:
+            print("Stack overflow! Cannot push element.")
+            return
+        self._top += 1
+        self._stack[self._top] = element
         print(f"Pushed {element} to the stack")
-
-    # Pop operation
+    
     def pop(self):
+        # 2. Pop operation - Remove and return the element at the top
         if self.is_empty():
-            print("Stack Underflow")
+            print("Stack underflow! Cannot pop element.")
             return None
-        popped_value = self.top.data  # Get the data from the top node
-        self.top = self.top.next      # Update top to the next node
-        self.size_count -= 1          # Decrement the size counter
-        print(f"Popped element: {popped_value}")
-        return popped_value
-
-    # Peek operation
+        popped_element = self._stack[self._top]
+        self._top -= 1
+        print(f"Popped element: {popped_element}")
+        return popped_element
+    
     def peek(self):
+        # 3. Peek operation - Return the element at the top without removing it
         if self.is_empty():
-            print("Stack is empty")
+            print("Stack is empty! No top element.")
             return None
-        print(f"Top element: {self.top.data}")
-        return self.top.data
-
-    # Check if the stack is empty
-    def is_empty(self):
-        return self.size_count == 0
-
-    # Return the current size of the stack
+        print(f"Top element: {self._stack[self._top]}")
+        return self._stack[self._top]
+    
     def size(self):
-        print(f"Stack size: {self.size_count}")
-        return self.size_count
-
-    # Display all elements in the stack
+        # 4. Size operation - Return the current number of elements
+        print(f"Stack size: {self._top + 1}")
+        return self._top + 1
+    
     def display(self):
+        # 5. Display operation - Show all elements in the stack
         if self.is_empty():
-            print("Stack is empty")
+            print("Stack is empty!")
         else:
-            current = self.top
-            elements = []
-            while current:
-                elements.append(current.data)
-                current = current.next
-            print(f"Display stack: {elements}")
+            print("Display stack:", [self._stack[i] for i in range(self._top + 1)])
 
-# Create a new stack
-stack = LinkedStack()
+# Create an instance of ArrayStack with default capacity 10
+stack = ArrayStack()
 
-# Push elements
-stack.push(10)
-stack.display()  # Output: Display stack: [10]
-
-stack.push(20)
-stack.display()  # Output: Display stack: [20, 10]
-
-stack.push(30)
-stack.display()  # Output: Display stack: [30, 20, 10]
-
-# Peek at the top
-stack.peek()  # Output: Top element: 30
-
-# Pop an element
-stack.pop()  # Output: Popped element: 30
-stack.display()  # Output: Display stack: [20, 10]
-
-# Check size
-stack.size()  # Output: Stack size: 2
+# Perform stack operations as per the example output
+stack.push(10)  # Push 10
+stack.display()  # Display stack
+stack.push(20)  # Push 20
+stack.display()  # Display stack
+stack.push(30)  # Push 30
+stack.display()  # Display stack
+stack.peek()  # Get the top element
+stack.pop()  # Pop the top element
+stack.size()  # Get the size of the stack
+stack.display()  # Display stack
