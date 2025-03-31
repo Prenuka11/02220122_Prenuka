@@ -1,88 +1,133 @@
-# Tshering lhamo - part1 ( Queue Implementation using Array )
+#02220133- part 2 (task3 and task4).
 
-# Task 1 (Implement the ArrayQueue Class Structure )
-class ArrayQueue:
-    def __init__(self, capacity=10):
-        # Private array to store elements
-        self._array = [None] * capacity
-        # Variables to track the front and rear indices
-        self._front = 0
-        self._rear = 0
-        self._size = 0
-        self._capacity = capacity
-        print(f"Created new Queue with capacity: {capacity}")
-    
+### Task3.
+# Define the Node class
+class Node:
+    def __init__(self, data):
+        self.data = data  # Data field to store the element
+        self.next = None  # Reference to the next node
+
+# Define the LinkedStack class
+class LinkedStack:
+    def __init__(self):
+        self.top = None   # Reference to the top node (head of the linked list)
+        self.size = 0     # Counter to track the number of elements
+        print("Created new LinkedStack")
+
+    # Check if the stack is empty
     def is_empty(self):
-        return self._size == 0
+        return self.size == 0
 
-# Example Output
-queue = ArrayQueue()  # Default capacity is 10
-print(f"Queue is empty: {queue.is_empty()}")
+    # Push operation
+    def push(self, value):
+        new_node = Node(value)  # Create a new node
+        new_node.next = self.top  # Link the new node to the current top
+        self.top = new_node  # Update the top to the new node
+        self.size += 1  # Increment the size counter
 
-#Task 2 (Implement Array-based Queue Operations)
-class ArrayQueue:
-    def __init__(self, capacity=10):
-        self._array = [None] * capacity
-        self._front = 0
-        self._rear = 0
-        self._size = 0
-        self._capacity = capacity
-        print(f"Created new Queue with capacity: {capacity}")
-
-    def is_empty(self):
-        return self._size == 0
-
-    def enqueue(self, element):
-        if self._size == self._capacity:
-            raise Exception("Queue is full")
-        self._array[self._rear] = element
-        self._rear = (self._rear + 1) % self._capacity
-        self._size += 1
-        print(f"Enqueued {element} to the queue")
-
-    def dequeue(self):
+    # Pop operation
+    def pop(self):
         if self.is_empty():
-            raise Exception("Queue is empty")
-        element = self._array[self._front]
-        self._array[self._front] = None  # Optional: Clear the slot
-        self._front = (self._front + 1) % self._capacity
-        self._size -= 1
-        print(f"Dequeued element: {element}")
-        return element
+            print("Stack Underflow")
+            return None
+        popped_value = self.top.data  # Get the data from the top node
+        self.top = self.top.next  # Move top to the next node
+        self.size -= 1  # Decrement the size counter
+        return popped_value
 
+    # Peek operation
     def peek(self):
         if self.is_empty():
-            raise Exception("Queue is empty")
-        return self._array[self._front]
+            print("Stack is empty")
+            return None
+        return self.top.data
 
+# Example usage
+stack = LinkedStack()
+print("Stack is empty:", stack.is_empty())  # Output: True
+
+
+### Task 4.
+# Define the Node class
+class Node:
+    def __init__(self, data):
+        self.data = data  # Data field to store the element
+        self.next = None  # Reference to the next node
+
+# Define the LinkedStack class
+class LinkedStack:
+    def __init__(self):
+        self.top = None   # Reference to the top node
+        self.size_count = 0  # Counter to track the number of elements
+        print("Created new LinkedStack")
+
+    # Push operation
+    def push(self, element):
+        new_node = Node(element)  # Create a new node
+        new_node.next = self.top  # Link the new node to the current top
+        self.top = new_node       # Update the top to the new node
+        self.size_count += 1      # Increment the size counter
+        print(f"Pushed {element} to the stack")
+
+    # Pop operation
+    def pop(self):
+        if self.is_empty():
+            print("Stack Underflow")
+            return None
+        popped_value = self.top.data  # Get the data from the top node
+        self.top = self.top.next      # Update top to the next node
+        self.size_count -= 1          # Decrement the size counter
+        print(f"Popped element: {popped_value}")
+        return popped_value
+
+    # Peek operation
+    def peek(self):
+        if self.is_empty():
+            print("Stack is empty")
+            return None
+        print(f"Top element: {self.top.data}")
+        return self.top.data
+
+    # Check if the stack is empty
+    def is_empty(self):
+        return self.size_count == 0
+
+    # Return the current size of the stack
     def size(self):
-        return self._size
+        print(f"Stack size: {self.size_count}")
+        return self.size_count
 
+    # Display all elements in the stack
     def display(self):
         if self.is_empty():
-            print("Queue is empty")
+            print("Stack is empty")
         else:
-            queue = []
-            index = self._front
-            for _ in range(self._size):
-                queue.append(self._array[index])
-                index = (index + 1) % self._capacity
-            print(f"Display queue: {queue}")
+            current = self.top
+            elements = []
+            while current:
+                elements.append(current.data)
+                current = current.next
+            print(f"Display stack: {elements}")
 
-# Example Usage
-queue = ArrayQueue()
+# Create a new stack
+stack = LinkedStack()
 
-queue.enqueue(10)
-queue.display()
+# Push elements
+stack.push(10)
+stack.display()  # Output: Display stack: [10]
 
-queue.enqueue(20)
-queue.display()
+stack.push(20)
+stack.display()  # Output: Display stack: [20, 10]
 
-queue.enqueue(30)
-queue.display()
+stack.push(30)
+stack.display()  # Output: Display stack: [30, 20, 10]
 
-print(f"Front element: {queue.peek()}")
-queue.dequeue()
-queue.display()
+# Peek at the top
+stack.peek()  # Output: Top element: 30
 
-print(f"Queue size: {queue.size()}")
+# Pop an element
+stack.pop()  # Output: Popped element: 30
+stack.display()  # Output: Display stack: [20, 10]
+
+# Check size
+stack.size()  # Output: Stack size: 2
