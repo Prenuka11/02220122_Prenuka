@@ -10,7 +10,7 @@ def sequential_search(arr, target):
             return index, comparisons
     return -1, comparisons # -1 means not found
 
-# Example usage
+# Example usage 
 arr = [23, 45, 12, 67, 89, 34, 56]
 target = 67
 
